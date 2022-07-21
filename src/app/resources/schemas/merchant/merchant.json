@@ -1,8 +1,821 @@
 {
   "response": {
-    "type": null,
-    "required": null,
-    "properties": null
+    "type": "object",
+    "required": [
+      "lastUpdate",
+      "TTL",
+      "id",
+      "status",
+      "basicInfo",
+      "services",
+      "items",
+      "menus",
+      "categories",
+      "itemOffers"
+    ],
+    "properties": {
+      "lastUpdate": {
+        "type": "string"
+      },
+      "TTL": {
+        "type": "integer"
+      },
+      "id": {
+        "type": "string"
+      },
+      "status": {
+        "type": "string",
+        "enum": ["AVAILABLE", "UNAVAILABLE"]
+      },
+      "basicInfo": {
+        "type": "object",
+        "required": [
+          "name",
+          "document",
+          "corporateName",
+          "description",
+          "averagePreparationTime",
+          "minOrderValue",
+          "merchantType",
+          "merchantCategories",
+          "address",
+          "contactEmails",
+          "contactPhones",
+          "logoImage"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "document": {
+            "type": "string"
+          },
+          "corporateName": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "description": {
+            "type": "string"
+          },
+          "averageTicket": {
+            "type": "number",
+            "format": "double"
+          },
+          "averagePreparationTime": {
+            "type": "number",
+            "format": "double"
+          },
+          "minOrderValue": {
+            "type": "object",
+            "required": [
+              "value",
+              "currency"
+            ],
+            "properties": {
+              "value": {
+                "type": "number",
+                "format": "double"
+              },
+              "currency": {
+                "type": "string"
+              }
+            }
+          },
+          "merchantType": {
+            "type": "string",
+            "enum": ["RESTAURANT"]
+          },
+          "merchantCategories": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["BURGERS", "PIZZA", "FAST_FOOD", "HOT_DOG", "JAPANESE", "DESSERTS", "AMERICAN", "ICE_CREAM", "BBQ", "SANDWICH", "MEXICAN", "BRAZILIAN", "PASTRY", "ARABIAN", "COMFORT_FOOD", "VEGETARIAN", "VEGAN", "BAKERY", "HEALTHY", "ITALIAN", "CHINESE", "JUICE_SMOOTHIES", "SEAFOOD", "CAFE", "SALADS", "COFFEE_TEA", "PASTA", "BREAKFAST_BRUNCH", "LATIN_AMERICAN", "CONVENIENCE", "PUB", "HAWAIIAN", "EUROPEAN", "FAMILY_MEALS", "FRENCH", "INDIAN", "PORTUGUESE", "SPANISH", "GOURMET", "KIDS_FRIENDLY", "SOUTH_AMERICAN", "SPECIALTY_FOODS", "ARGENTINIAN", "PREMIUM", "AFFORDABLE_MEALS"]
+            }
+          },
+          "address": {
+            "type": "object",
+            "required": [
+              "country",
+              "state",
+              "city",
+              "district",
+              "street",
+              "number",
+              "postalCode",
+              "complement",
+              "latitude",
+              "longitude"
+            ],
+            "properties": {
+              "country": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "district": {
+                "type": "string"
+              },
+              "street": {
+                "type": "string"
+              },
+              "number": {
+                "type": "string"
+              },
+              "postalCode": {
+                "type": "string"
+              },
+              "complement": {
+                "type": "string"
+              },
+              "reference": {
+                "type": "string"
+              },
+              "latitude": {
+                "type": "number"
+              },
+              "longitude": {
+                "type": "number"
+              }
+            }
+          },
+          "contactEmails": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "contactPhones": {
+            "type": "object",
+            "required": [
+              "commercialNumber",
+              "whatsappNumber"
+            ],
+            "properties": {
+              "commercialNumber": {
+                "type": "string"
+              },
+              "whatsappNumber": {
+                "type": "string"
+              }
+            }
+          },
+          "logoImage": {
+            "type": "object",
+            "required": [
+              "URL",
+              "CRC-32"
+            ],
+            "properties": {
+              "URL": {
+                "type": "string",
+                "format": "uri"
+              },
+              "CRC-32": {
+                "type": "string"
+              }
+            }
+          },
+          "bannerImage": {
+            "type": "object",
+            "required": [
+              "URL",
+              "CRC-32"
+            ],
+            "properties": {
+              "URL": {
+                "type": "string",
+                "format": "uri"
+              },
+              "CRC-32": {
+                "type": "string"
+              }
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "services": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "id",
+            "status",
+            "serviceType",
+            "menuId",
+            "serviceHours"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "UUID"
+            },
+            "status": {
+              "type": "string",
+              "enum": ["AVAILABLE", "UNAVAILABLE"]
+            },
+            "serviceType": {
+              "type": "string",
+              "enum": ["DELIVERY", "TAKEOUT"]
+            },
+            "menuId": {
+              "type": "string",
+              "format": "UUID"
+            },
+            "serviceArea": {
+              "type": "object",
+              "required": [
+                "id",
+                "polygon",
+                "geoRadius"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "UUID"
+                },
+                "polygon": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "geoCoordinates",
+                      "price",
+                      "estimateDeliveryTime"
+                    ],
+                    "properties": {
+                      "geoCoordinates": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "latitude",
+                            "longitude"
+                          ],
+                          "properties": {
+                            "latitude": {
+                              "type": "number"
+                            },
+                            "longitude": {
+                              "type": "number"
+                            }
+                          }
+                        }
+                      },
+                      "price": {
+                        "type": "object",
+                        "required": [
+                          "value",
+                          "currency"
+                        ],
+                        "properties": {
+                          "value": {
+                            "type": "integer"
+                          },
+                          "currency": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "estimateDeliveryTime": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                },
+                "geoRadius": {
+                  "type": "object",
+                  "required": [
+                    "geoMidpointLatitude",
+                    "geoMidpointLongitude",
+                    "radius"
+                  ],
+                  "properties": {
+                    "geoMidpointLatitude": {
+                      "type": "number"
+                    },
+                    "geoMidpointLongitude": {
+                      "type": "number"
+                    },
+                    "radius": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "size",
+                          "price",
+                          "estimateDeliveryTime"
+                        ],
+                        "properties": {
+                          "size": {
+                            "type": "integer"
+                          },
+                          "price": {
+                            "type": "object",
+                            "required": [
+                              "value",
+                              "currency"
+                            ],
+                            "properties": {
+                              "value": {
+                                "type": "number"
+                              },
+                              "currency": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "estimateDeliveryTime": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "serviceHours": {
+              "type": "object",
+              "required": [
+                "id",
+                "weekHours",
+                "holidayHours"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "UUID"
+                },
+                "weekHours": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "dayOfWeek",
+                      "timePeriods"
+                    ],
+                    "properties": {
+                      "dayOfWeek": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "timePeriods": {
+                        "type": "object",
+                        "required": [
+                          "startTime",
+                          "endTime"
+                        ],
+                        "properties": {
+                          "startTime": {
+                            "type": "string"
+                          },
+                          "endTime": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "holidayHours": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "date",
+                      "timePeriods"
+                    ],
+                    "properties": {
+                      "date": {
+                        "type": "string"
+                      },
+                      "timePeriods": {
+                        "type": "object",
+                        "required": [
+                          "startTime",
+                          "endTime"
+                        ],
+                        "properties": {
+                          "startTime": {
+                            "type": "string"
+                          },
+                          "endTime": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "id",
+            "name",
+            "description",
+            "externalCode",
+            "image",
+            "serving",
+            "unit",
+            "nutritionalInfo"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "UUID"
+            },
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "externalCode": {
+              "type": "string"
+            },
+            "image": {
+              "type": "object",
+              "required": [
+                "URL",
+                "CRC-32"
+              ],
+              "properties": {
+                "URL": {
+                  "type": "string"
+                },
+                "CRC-32": {
+                  "type": "string"
+                }
+              }
+            },
+            "serving": {
+              "type": "integer"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "nutritionalInfo": {
+              "type": "object",
+              "required": [
+                "description",
+                "calories",
+                "allergen"
+              ],
+              "properties": {
+                "description": {
+                  "type": "string"
+                },
+                "calories": {
+                  "type": "string"
+                },
+                "allergen": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "menus": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "id",
+            "name",
+            "description",
+            "externalCode",
+            "disclaimer",
+            "categoryId"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "UUID"
+            },
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "externalCode": {
+              "type": "string"
+            },
+            "disclaimer": {
+              "type": "string"
+            },
+            "categoryId": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "UUID"
+              }
+            }
+          }
+        }
+      },
+      "categories": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "id",
+            "index",
+            "name",
+            "description",
+            "image",
+            "externalCode",
+            "status",
+            "availabilityId",
+            "itemOfferId"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "UUID"
+            },
+            "index": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "image": {
+              "type": "object",
+              "required": [
+                "URL",
+                "CRC-32"
+              ],
+              "properties": {
+                "URL": {
+                  "type": "string"
+                },
+                "CRC-32": {
+                  "type": "string"
+                }
+              }
+            },
+            "externalCode": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string",
+              "enum": ["AVAILABLE", "UNAVAILABLE"]
+            },
+            "availabilityId": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "UUID"
+              }
+            },
+            "itemOfferId": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "UUID"
+              }
+            }
+          }
+        }
+      },
+      "itemOffers": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "id",
+            "itemId",
+            "index",
+            "price",
+            "availabilityId",
+            "optionGroupsId"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "UUID"
+            },
+            "itemId": {
+              "type": "string",
+              "format": "UUID"
+            },
+            "index": {
+              "type": "integer"
+            },
+            "price": {
+              "type": "object",
+              "required": [
+                "value",
+                "originalValue",
+                "currency"
+              ],
+              "properties": {
+                "value": {
+                  "type": "integer"
+                },
+                "originalValue": {
+                  "type": "integer"
+                },
+                "currency": {
+                  "type": "string"
+                }
+              }
+            },
+            "availabilityId": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "UUID"
+              }
+            },
+            "optionGroupsId": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "UUID"
+              }
+            }
+          }
+        }
+      },
+      "optionGroups": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "id",
+            "index",
+            "name",
+            "description",
+            "externalCode",
+            "status",
+            "minPermitted",
+            "maxPermitted",
+            "options"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "UUID"
+            },
+            "index": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "externalCode": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string",
+              "enum": ["AVAILABLE", "UNAVAILABLE"]
+            },
+            "minPermitted": {
+              "type": "integer"
+            },
+            "maxPermitted": {
+              "type": "integer"
+            },
+            "options": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "itemId",
+                  "index",
+                  "price",
+                  "maxPermitted"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "UUID"
+                  },
+                  "itemId": {
+                    "type": "string",
+                    "format": "UUID"
+                  },
+                  "index": {
+                    "type": "integer"
+                  },
+                  "price": {
+                    "type": "object",
+                    "required": [
+                      "value",
+                      "originalValue",
+                      "currency"
+                    ],
+                    "properties": {
+                      "value": {
+                        "type": "integer"
+                      },
+                      "originalValue": {
+                        "type": "integer"
+                      },
+                      "currency": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "maxPermitted": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "availabilities": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "id",
+            "startDate",
+            "endDate",
+            "hours"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "UUID"
+            },
+            "startDate": {
+              "type": "string"
+            },
+            "endDate": {
+              "type": "string"
+            },
+            "hours": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "dayOfWeek",
+                  "timePeriods"
+                ],
+                "properties": {
+                  "dayOfWeek": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "timePeriods": {
+                    "type": "object",
+                    "required": [
+                      "startTime",
+                      "endTime"
+                    ],
+                    "properties": {
+                      "startTime": {
+                        "type": "string"
+                      },
+                      "endTime": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
   },
   "request": {
     "type": null,
