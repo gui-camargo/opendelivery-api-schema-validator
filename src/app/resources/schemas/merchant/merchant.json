@@ -216,7 +216,7 @@
           "properties": {
             "id": {
               "type": "string",
-              "format": "UUID"
+              "format": "uuid"
             },
             "status": {
               "type": "string",
@@ -228,7 +228,7 @@
             },
             "menuId": {
               "type": "string",
-              "format": "UUID"
+              "format": "uuid"
             },
             "serviceArea": {
               "type": "object",
@@ -240,7 +240,7 @@
               "properties": {
                 "id": {
                   "type": "string",
-                  "format": "UUID"
+                  "format": "uuid"
                 },
                 "polygon": {
                   "type": "array",
@@ -353,7 +353,7 @@
               "properties": {
                 "id": {
                   "type": "string",
-                  "format": "UUID"
+                  "format": "uuid"
                 },
                 "weekHours": {
                   "type": "array",
@@ -440,7 +440,7 @@
           "properties": {
             "id": {
               "type": "string",
-              "format": "UUID"
+              "format": "uuid"
             },
             "name": {
               "type": "string"
@@ -512,7 +512,7 @@
           "properties": {
             "id": {
               "type": "string",
-              "format": "UUID"
+              "format": "uuid"
             },
             "name": {
               "type": "string"
@@ -530,7 +530,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "format": "UUID"
+                "format": "uuid"
               }
             }
           }
@@ -554,7 +554,7 @@
           "properties": {
             "id": {
               "type": "string",
-              "format": "UUID"
+              "format": "uuid"
             },
             "index": {
               "type": "integer"
@@ -591,14 +591,14 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "format": "UUID"
+                "format": "uuid"
               }
             },
             "itemOfferId": {
               "type": "array",
               "items": {
                 "type": "string",
-                "format": "UUID"
+                "format": "uuid"
               }
             }
           }
@@ -619,11 +619,11 @@
           "properties": {
             "id": {
               "type": "string",
-              "format": "UUID"
+              "format": "uuid"
             },
             "itemId": {
               "type": "string",
-              "format": "UUID"
+              "format": "uuid"
             },
             "index": {
               "type": "integer"
@@ -651,14 +651,14 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "format": "UUID"
+                "format": "uuid"
               }
             },
             "optionGroupsId": {
               "type": "array",
               "items": {
                 "type": "string",
-                "format": "UUID"
+                "format": "uuid"
               }
             }
           }
@@ -682,7 +682,7 @@
           "properties": {
             "id": {
               "type": "string",
-              "format": "UUID"
+              "format": "uuid"
             },
             "index": {
               "type": "integer"
@@ -720,11 +720,11 @@
                 "properties": {
                   "id": {
                     "type": "string",
-                    "format": "UUID"
+                    "format": "uuid"
                   },
                   "itemId": {
                     "type": "string",
-                    "format": "UUID"
+                    "format": "uuid"
                   },
                   "index": {
                     "type": "integer"
@@ -770,7 +770,7 @@
           "properties": {
             "id": {
               "type": "string",
-              "format": "UUID"
+              "format": "uuid"
             },
             "startDate": {
               "type": "string"
