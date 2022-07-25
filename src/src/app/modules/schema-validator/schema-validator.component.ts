@@ -46,12 +46,10 @@ export class SchemaValidatorComponent implements OnInit {
 
   ngOnInit(): void {
     this.populateEntityGroups()
-    console.dir(this.entityGroups)
   }
 
   onSubmit(): void {
     const { solicitationEndpointId, solicitationEntityId } = this.splitFormValues(this.formControls.endpointIdAndEntityId.value)
-    console.log(solicitationEndpointId, solicitationEntityId)
     const result = this.service.validate(this.formControls.json.value, this.formControls.solicitationType.value, solicitationEndpointId, solicitationEntityId);
     this.checkValidationResult(result);
   }
