@@ -3,7 +3,7 @@
   <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
     <mat-form-field class="form-routes" appearance="outline">
       <mat-label>Select Route: </mat-label>
-      <mat-select class="form-select" formControlName="endpointIdAndEntityId" id="routeAndEntity">
+      <mat-select class="form-select" data-cy="routes" formControlName="endpointIdAndEntityId" id="routeAndEntity">
         <mat-select-trigger>
           <span class="type-method {{selectedEndpoint.type}}">
             {{selectedEndpoint.type}}
@@ -13,7 +13,8 @@
           </span>
         </mat-select-trigger>
         <mat-option (click)="enableSolicitationTypeButton()"></mat-option>
-        <mat-optgroup *ngFor="let entity of getEntityGroups" [label]="entity.name">
+
+        <mat-optgroup *ngFor="let entity of getEntityGroups" [label]="entity.name" >
           <mat-option *ngFor="let endpoint of entity.endpoint" [value]="[entity.id,endpoint.id]"
             (click)="setSelectedEndpoint(endpoint)">
             <span class="type-method {{endpoint.type}}"> {{endpoint.type}} </span>
@@ -21,6 +22,7 @@
           </mat-option>
         </mat-optgroup>
       </mat-select>
+
       <mat-error *ngIf="formControls.endpointIdAndEntityId.invalid">Please choose a route</mat-error>
     </mat-form-field>
 
@@ -35,11 +37,11 @@
     <span class="label">COPY YOUR JSON TEXT HERE<span
         class="nameEndpointSelected">{{selectedEndpoint.endpoint}}</span></span>
     <mat-form-field appearance="outline">
-      <textarea formControlName="json" matInput name="" id="json" placeholder="{}" cols="50" rows="15"></textarea>
+      <textarea formControlName="json" data-cy="json-area" matInput name="" id="json" placeholder="{}" cols="50" rows="15"></textarea>
       <mat-error *ngIf="formControls.json.invalid">Please inform the JSON you want to
         validade</mat-error>
     </mat-form-field>
-    <button class="btn-validate" type="submit" disabled="{{!form.valid}}" mat-raised-button>Validate</button>
+    <button class="btn-validate" data-cy="submit" type="submit" disabled="{{!form.valid}}" mat-raised-button>Validate</button>
   </form>
 
   <div *ngIf="showResult">
