@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +13,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  readonly VERSION: string = 'Version 1.0.0'
+  readonly VERSION = environment.version
 
   readonly PROGRAMMERS_LOGO_PATH: string = "assets/images/logo/programmers-colorido.png";
   readonly OPEN_DELIVERY_LOGO_PATH: string = "assets/images/logo/open-delivery.webp";
