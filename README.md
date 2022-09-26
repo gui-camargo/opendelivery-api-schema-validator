@@ -12,6 +12,9 @@
 <br />
 <div align="center">
 
+  <a href="https://github.com/ProgrammersIT/opendelivery-api-schema-validator/">
+    <img src="https://media-exp1.licdn.com/dms/image/C560BAQE0V2eaYs129g/company-logo_200_200/0/1646824691943?e=2147483647&v=beta&t=Obiug5sFxzGxo7xcTnrmjZoFNqACm1kD3rkQnGfAhnY" alt="Logo" width="200" height="200">
+  </a>
   <h3 align="center">Open Delivery Schema Validator</h3>
 
   <p align="center">
@@ -173,7 +176,7 @@ Project Link: https://github.com/ProgrammersIT/opendelivery-api-schema-validator
 [license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: https://user-images.githubusercontent.com/80956588/192372514-69b8de27-14de-4d34-a4ec-a96898f4eba0.png
+[product-screenshot]: https://user-images.githubusercontent.com/80956588/192378320-c915b264-fc05-4f01-ab5d-4064b3dfa7b6.png
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
