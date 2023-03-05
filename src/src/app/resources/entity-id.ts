@@ -1,4 +1,5 @@
 export enum EntityIdEnum {
-    Order = 1,
-    Merchant = 2
+    Merchant = 1,
+    Order = 2,
+    Logistics = 3
 }

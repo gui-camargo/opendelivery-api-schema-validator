@@ -8,20 +8,23 @@
         "status",
         "basicInfo",
         "services",
-        "items",
         "menus",
         "categories",
-        "itemOffers"
+        "itemOffers",
+        "items"
     ],
     "properties": {
         "lastUpdate": {
-            "type": "string"
+            "type": "string",
+            "format": "date-time"
         },
         "TTL": {
             "type": "integer"
         },
         "id": {
-            "type": "string"
+            "type": "string",
+            "maxLength": 100,
+            "minLenght": 36
         },
         "status": {
             "type": "string",
@@ -187,10 +190,12 @@
                             "type": "string"
                         },
                         "latitude": {
-                            "type": "number"
+                            "type": "number",
+                            "format": "float"
                         },
                         "longitude": {
-                            "type": "number"
+                            "type": "number",
+                            "format": "float"
                         }
                     }
                 },
@@ -203,8 +208,7 @@
                 "contactPhones": {
                     "type": "object",
                     "required": [
-                        "commercialNumber",
-                        "whatsappNumber"
+                        "commercialNumber"
                     ],
                     "properties": {
                         "commercialNumber": {
@@ -280,8 +284,71 @@
                         "type": "string",
                         "enum": [
                             "DELIVERY",
-                            "TAKEOUT"
+                            "TAKEOUT",
+                            "INDOOR"
                         ]
+                    },
+                    "serviceTiming": {
+                        "type": "object",
+                        "required": [
+                            "timing",
+                            "schedule"
+                        ],
+                        "properties": {
+                            "timing": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "enum": [
+                                        "INSTANT",
+                                        "SCHEDULED"
+                                    ]
+                                }
+                            },
+                            "schedule": {
+                                "type": "object",
+                                "required": [
+                                    "scheduleTimeWindow",
+                                    "scheduleStartWindow",
+                                    "scheduleEndWindow"
+                                ],
+                                "properties": {
+                                    "scheduleTimeWindow": {
+                                        "type": "string",
+                                        "enum": [
+                                            "15_MINUTES",
+                                            "30_MINUTES",
+                                            "45_MINUTES",
+                                            "60_MINUTES",
+                                            "90_MINUTES",
+                                            "120_MINUTES"
+                                        ]
+                                    },
+                                    "scheduleStartWindow": {
+                                        "type": "string",
+                                        "enum": [
+                                            "15_MINUTES",
+                                            "30_MINUTES",
+                                            "45_MINUTES",
+                                            "60_MINUTES",
+                                            "90_MINUTES",
+                                            "120_MINUTES"
+                                        ]
+                                    },
+                                    "scheduleEndWindow": {
+                                        "type": "string",
+                                        "enum": [
+                                            "15_MINUTES",
+                                            "30_MINUTES",
+                                            "45_MINUTES",
+                                            "60_MINUTES",
+                                            "90_MINUTES",
+                                            "120_MINUTES"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     },
                     "menuId": {
                         "type": "string",
@@ -356,10 +423,12 @@
                                 ],
                                 "properties": {
                                     "geoMidpointLatitude": {
-                                        "type": "number"
+                                        "type": "number",
+                                        "format": "float"
                                     },
                                     "geoMidpointLongitude": {
-                                        "type": "number"
+                                        "type": "number",
+                                        "format": "float"
                                     },
                                     "radius": {
                                         "type": "array",
@@ -493,508 +562,523 @@
         },
         "items": {
             "type": "array",
-          "items": {
-            "type": "object",
-            "required": [
-              "id",
-              "name",
-              "description",
-              "externalCode",
-              "image",
-              "unit"
-            ],
-            "properties": {
-              "id": {
-                "type": "string",
-                "format": "uuid"
-              },
-              "name": {
-                "type": "string",
-                "maxLength": 150
-              },
-              "description": {
-                "type": "string"
-              },
-              "externalCode": {
-                "type": "string"
-              },
-              "image": {
+            "items": {
                 "type": "object",
                 "required": [
-                  "URL",
-                  "CRC-32"
+                    "id",
+                    "name",
+                    "description",
+                    "externalCode",
+                    "unit"
                 ],
                 "properties": {
-                  "URL": {
-                    "type": "string",
-                    "format": "uri"
-                  },
-                  "CRC-32": {
-                    "type": "string"
-                  }
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 150
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "externalCode": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "AVAILABLE",
+                            "UNAVAILABLE"
+                        ]
+                    },
+                    "image": {
+                        "type": "object",
+                        "required": [
+                            "URL",
+                            "CRC-32"
+                        ],
+                        "properties": {
+                            "URL": {
+                                "type": "string",
+                                "format": "uri"
+                            },
+                            "CRC-32": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "nutritionalInfo": {
+                        "type": "object",
+                        "required": [
+                            "description",
+                            "calories"
+                        ],
+                        "properties": {
+                            "description": {
+                                "type": "string"
+                            },
+                            "calories": {
+                                "type": "string"
+                            },
+                            "allergen": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "enum": [
+                                        "ALMONDS",
+                                        "ALPHA_ISOMETHYL_IONONE",
+                                        "ALCOHOL",
+                                        "AMYL_CINNAMAL",
+                                        "ANISE_ALCOHOL",
+                                        "BARLEY",
+                                        "BENZYL_ALCOHOL",
+                                        "BENZYL_BENZOATE",
+                                        "BENZYL_CINNAMATE",
+                                        "BENZYL_SALICYLATE",
+                                        "BRAZIL_NUTS",
+                                        "BUTYLPHENYL_METHYLPROPIONATE",
+                                        "CARROTS",
+                                        "CASHEW_NUTS",
+                                        "CELERY",
+                                        "CEREALS_CONTAINING_GLUTEN",
+                                        "CINNAMAL",
+                                        "CINNAMYL_ALCOHOL",
+                                        "CITRAL",
+                                        "CITRONELLOL",
+                                        "COCOA",
+                                        "CORIANDER",
+                                        "CORN",
+                                        "COUMARIN",
+                                        "CRUSTACEANS",
+                                        "EGGS",
+                                        "EUGENOL",
+                                        "EVERNIA_FURFURACEA",
+                                        "EVERNIA_PRUNASTRI",
+                                        "FARNESOL",
+                                        "FISH",
+                                        "GERANIOL",
+                                        "GLUTEN",
+                                        "HAZELNUTS",
+                                        "HEXYL_CINNAMAL",
+                                        "HYDROXYCITRONELLAL",
+                                        "KAMUT",
+                                        "LACTOSE",
+                                        "LUPINE",
+                                        "MACADAMIA_NUTS",
+                                        "METHYL_2_OCTYNOATE",
+                                        "MILK",
+                                        "MOLLUSCS",
+                                        "MUSTARD",
+                                        "NO_DECLARED_ALLERGENS",
+                                        "OAT",
+                                        "PEANUTS",
+                                        "PEAS",
+                                        "PECAN_NUTS",
+                                        "PISTACHIOS",
+                                        "POD_FRUITS",
+                                        "QUEENSLAND_NUTS",
+                                        "RYE",
+                                        "SESAME_SEEDS",
+                                        "SOYBEANS",
+                                        "SPELT",
+                                        "SULPHUR_DIOXIDE",
+                                        "TREE_NUTS",
+                                        "TREE_NUT_TRACES",
+                                        "WALNUTS",
+                                        "WHEAT"
+                                    ]
+                                }
+                            },
+                            "additives": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "suitableDiet": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "enum": [
+                                        "DIABETIC",
+                                        "GLUTEN_FREE",
+                                        "HALAL",
+                                        "HINDU",
+                                        "KOSHER",
+                                        "LOW_CALORIE",
+                                        "LOW_FAT",
+                                        "LOW_LACTOSE",
+                                        "LOW_SALT",
+                                        "VEGAN",
+                                        "VEGETARIAN"
+                                    ]
+                                }
+                            },
+                            "isAlcoholic": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "serving": {
+                        "type": "integer"
+                    },
+                    "unit": {
+                        "type": "string"
+                    },
+                    "ean": {
+                        "type": "string"
+                    }
                 }
-              },
-              "serving": {
-                "type": "integer"
-              },
-              "unit": {
-                "type": "string"
-              },
-              "ean": {
-                "type": "string"
-              },
-              "nutritionalInfo": {
-                "type": "object",
-                "required": [
-                  "description",
-                  "calories"
-                ],
-                "properties": {
-                  "description": {
-                    "type": "string"
-                  },
-                  "calories": {
-                    "type": "string"
-                  },
-                  "allergen": {
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "enum": [
-                        "ALMONDS",
-                        "ALPHA_ISOMETHYL_IONONE",
-                        "ALCOHOL",
-                        "AMYL_CINNAMAL",
-                        "ANISE_ALCOHOL",
-                        "BARLEY",
-                        "BENZYL_ALCOHOL",
-                        "BENZYL_BENZOATE",
-                        "BENZYL_CINNAMATE",
-                        "BENZYL_SALICYLATE",
-                        "BRAZIL_NUTS",
-                        "BUTYLPHENYL_METHYLPROPIONATE",
-                        "CARROTS",
-                        "CASHEW_NUTS",
-                        "CELERY",
-                        "CEREALS_CONTAINING_GLUTEN",
-                        "CINNAMAL",
-                        "CINNAMYL_ALCOHOL",
-                        "CITRAL",
-                        "CITRONELLOL",
-                        "COCOA",
-                        "CORIANDER",
-                        "CORN",
-                        "COUMARIN",
-                        "CRUSTACEANS",
-                        "EGGS",
-                        "EUGENOL",
-                        "EVERNIA_FURFURACEA",
-                        "EVERNIA_PRUNASTRI",
-                        "FARNESOL",
-                        "FISH",
-                        "GERANIOL",
-                        "GLUTEN",
-                        "HAZELNUTS",
-                        "HEXYL_CINNAMAL",
-                        "HYDROXYCITRONELLAL",
-                        "KAMUT",
-                        "LACTOSE",
-                        "LUPINE",
-                        "MACADAMIA_NUTS",
-                        "METHYL_2_OCTYNOATE",
-                        "MILK",
-                        "MOLLUSCS",
-                        "MUSTARD",
-                        "NO_DECLARED_ALLERGENS",
-                        "OAT",
-                        "PEANUTS",
-                        "PEAS",
-                        "PECAN_NUTS",
-                        "PISTACHIOS",
-                        "POD_FRUITS",
-                        "QUEENSLAND_NUTS",
-                        "RYE",
-                        "SESAME_SEEDS",
-                        "SOYBEANS",
-                        "SPELT",
-                        "SULPHUR_DIOXIDE",
-                        "TREE_NUTS",
-                        "TREE_NUT_TRACES",
-                        "WALNUTS",
-                        "WHEAT"
-                      ]
-                    }
-                  },
-                  "additives": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "suitableDiet": {
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "enum": [
-                        "DIABETIC",
-                        "GLUTEN_FREE",
-                        "HALAL",
-                        "HINDU",
-                        "KOSHER",
-                        "LOW_CALORIE",
-                        "LOW_FAT",
-                        "LOW_LACTOSE",
-                        "LOW_SALT",
-                        "VEGAN",
-                        "VEGETARIAN"
-                      ]
-                    }
-                  },
-                  "isAlcoholic": {
-                    "type": "boolean"
-                  }
-                }
-              }
             }
-          }
         },
-          "menus": {
-              "type": "array",
-              "items": {
-                  "type": "object",
-                  "required": [
-                      "id",
-                      "name",
-                      "description",
-                      "externalCode",
-                      "disclaimer",
-                      "categoryId"
-                  ],
-                  "properties": {
-                      "id": {
-                          "type": "string",
-                          "format": "uuid"
-                      },
-                      "name": {
-                          "type": "string",
-                          "maxLength": 500
-                      },
-                      "description": {
-                          "type": "string"
-                      },
-                      "externalCode": {
-                          "type": "string"
-                      },
-                      "disclaimer": {
-                          "type": "string"
-                      },
-                      "disclaimerURL": {
-                          "type": "string",
-                          "format": "uri"
-                      },
-                      "categoryId": {
-                          "type": "array",
-                          "items": {
-                              "type": "string",
-                              "format": "uuid"
-                          }
-                      }
-                  }
-              }
-          },
-          "categories": {
-              "type": "array",
-              "items": {
-                  "type": "object",
-                  "required": [
-                      "id",
-                      "index",
-                      "name",
-                      "description",
-                      "externalCode",
-                      "status",
-                      "availabilityId"
-                  ],
-                  "properties": {
-                      "id": {
-                          "type": "string",
-                          "format": "uuid"
-                      },
-                      "index": {
-                          "type": "integer"
-                      },
-                      "name": {
-                          "type": "string",
-                          "maxLength": 150
-                      },
-                      "description": {
-                          "type": "string"
-                      },
-                      "image": {
-                          "type": "object",
-                          "required": [
-                              "URL",
-                              "CRC-32"
-                          ],
-                          "properties": {
-                              "URL": {
-                                  "type": "string",
-                                  "format": "uri"
-                              },
-                              "CRC-32": {
-                                  "type": "string"
-                              }
-                          }
-                      },
-                      "externalCode": {
-                          "type": "string"
-                      },
-                      "status": {
-                          "type": "string",
-                          "enum": [
-                              "AVAILABLE",
-                              "UNAVAILABLE"
-                          ]
-                      },
-                      "availabilityId": {
-                          "type": "array",
-                          "items": {
-                              "type": "string",
-                              "format": "uuid"
-                          }
-                      },
-                      "itemOfferId": {
-                          "type": "array",
-                          "items": {
-                              "type": "string",
-                              "format": "uuid"
-                          }
-                      }
-                  }
-              }
-          },
-          "itemOffers": {
-              "type": "array",
-              "items": {
-                  "type": "object",
-                  "required": [
-                      "id",
-                      "itemId",
-                      "index",
-                      "price",
-                      "availabilityId"
-                  ],
-                  "properties": {
-                      "id": {
-                          "type": "string",
-                          "format": "uuid"
-                      },
-                      "itemId": {
-                          "type": "string",
-                          "format": "uuid"
-                      },
-                      "index": {
-                          "type": "integer"
-                      },
-                      "price": {
-                          "type": "object",
-                          "required": [
-                              "value",
-                              "originalValue",
-                              "currency"
-                          ],
-                          "properties": {
-                              "value": {
-                                  "type": "number",
-                                  "format": "double"
-                              },
-                              "originalValue": {
-                                  "type": "number",
-                                  "format": "double"
-                              },
-                              "currency": {
-                                  "type": "string"
-                              }
-                          }
-                      },
-                      "availabilityId": {
-                          "type": "array",
-                          "items": {
-                              "type": "string",
-                              "format": "uuid"
-                          }
-                      },
-                      "optionGroupsId": {
-                          "type": "array",
-                          "items": {
-                              "type": "string",
-                              "format": "uuid"
-                          }
-                      }
-                  }
-              }
-          },
-          "optionGroups": {
-              "type": "array",
-              "items": {
-                  "type": "object",
-                  "required": [
-                      "id",
-                      "index",
-                      "name",
-                      "description",
-                      "externalCode",
-                      "status",
-                      "minPermitted",
-                      "maxPermitted"
-                  ],
-                  "properties": {
-                      "id": {
-                          "type": "string",
-                          "format": "uuid"
-                      },
-                      "index": {
-                          "type": "integer"
-                      },
-                      "name": {
-                          "type": "string",
-                          "maxLength": 150
-                      },
-                      "description": {
-                          "type": "string"
-                      },
-                      "externalCode": {
-                          "type": "string"
-                      },
-                      "status": {
-                          "type": "string",
-                          "enum": [
-                              "AVAILABLE",
-                              "UNAVAILABLE"
-                          ]
-                      },
-                      "minPermitted": {
-                          "type": "integer"
-                      },
-                      "maxPermitted": {
-                          "type": "integer"
-                      },
-                      "options": {
-                          "type": "array",
-                          "items": {
-                              "type": "object",
-                              "required": [
-                                  "id"
-                              ],
-                              "properties": {
-                                  "id": {
-                                      "type": "string",
-                                      "format": "uuid"
-                                  },
-                                  "itemId": {
-                                      "type": "string",
-                                      "format": "uuid"
-                                  },
-                                  "index": {
-                                      "type": "integer"
-                                  },
-                                  "price": {
-                                      "type": "object",
-                                      "required": [
-                                          "value",
-                                          "originalValue",
-                                          "currency"
-                                      ],
-                                      "properties": {
-                                          "value": {
-                                              "type": "number",
-                                              "format": "double"
-                                          },
-                                          "originalValue": {
-                                              "type": "number",
-                                              "format": "double"
-                                          },
-                                          "currency": {
-                                              "type": "string"
-                                          }
-                                      }
-                                  },
-                                  "maxPermitted": {
-                                      "type": "integer"
-                                  }
-                              }
-                          }
-                      }
-                  }
-              }
-          },
-          "availabilities": {
-              "type": "array",
-              "items": {
-                  "type": "object",
-                  "required": [
-                      "id",
-                      "hours"
-                  ],
-                  "properties": {
-                      "id": {
-                          "type": "string",
-                          "format": "uuid"
-                      },
-                      "startDate": {
-                          "type": "string"
-                      },
-                      "endDate": {
-                          "type": "string"
-                      },
-                      "hours": {
-                          "type": "array",
-                          "items": {
-                              "type": "object",
-                              "required": [
-                                  "dayOfWeek",
-                                  "timePeriods"
-                              ],
-                              "properties": {
-                                  "dayOfWeek": {
-                                      "type": "array",
-                                      "items": {
-                                          "type": "string",
-                                          "enum": [
-                                              "MONDAY",
-                                              "TUESDAY",
-                                              "WEDNESDAY",
-                                              "THURSDAY",
-                                              "FRIDAY",
-                                              "SATURDAY",
-                                              "SUNDAY"
-                                          ]
-                                      }
-                                  },
-                                  "timePeriods": {
-                                      "type": "object",
-                                      "required": [
-                                          "startTime",
-                                          "endTime"
-                                      ],
-                                      "properties": {
-                                          "startTime": {
-                                              "type": "string",
-                                              "format": "time"
-                                          },
-                                          "endTime": {
-                                              "type": "string",
-                                              "format": "time"
-                                          }
-                                      }
-                                  }
-                              }
-                          }
+        "menus": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "id",
+                    "name",
+                    "externalCode",
+                    "categoryId"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "double"
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 500
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "externalCode": {
+                        "type": "string"
+                    },
+                    "disclaimer": {
+                        "type": "string"
+                    },
+                    "disclaimerURL": {
+                        "type": "string",
+                        "format": "uri"
+                    },
+                    "categoryId": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                }
+            }
+        },
+        "categories": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "id",
+                    "index",
+                    "name",
+                    "externalCode",
+                    "status",
+                    "availabilityId"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "index": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "image": {
+                        "type": "object",
+                        "required": [
+                            "URL",
+                            "CRC-32"
+                        ],
+                        "properties": {
+                            "URL": {
+                                "type": "string",
+                                "format": "uri"
+                            },
+                            "CRC-32": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "externalCode": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "AVAILABLE",
+                            "UNAVAILABLE"
+                        ]
+                    },
+                    "availabilityId": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    "itemOfferId": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                }
+            }
+        },
+        "itemOffers": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "id",
+                    "itemId",
+                    "index",
+                    "price",
+                    "availabilityId"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "itemId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "index": {
+                        "type": "integer"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "AVAILABLE",
+                            "UNAVAILABLE"
+                        ]
+                    },
+                    "price": {
+                        "type": "object",
+                        "required": [
+                            "value",
+                            "originalValue",
+                            "currency"
+                        ],
+                        "properties": {
+                            "value": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "originalValue": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "currency": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "availabilityId": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    "optionGroupsId": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                }
+            }
+        },
+        "optionGroups": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "id",
+                    "index",
+                    "name",
+                    "externalCode",
+                    "status",
+                    "minPermitted",
+                    "maxPermitted"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "index": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 150
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "externalCode": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "AVAILABLE",
+                            "UNAVAILABLE"
+                        ]
+                    },
+                    "minPermitted": {
+                        "type": "integer"
+                    },
+                    "maxPermitted": {
+                        "type": "integer"
+                    },
+                    "options": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "required": [
+                                "id"
+                            ],
+                            "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                },
+                                "itemId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                },
+                                "index": {
+                                    "type": "integer"
+                                },
+                                "status": {
+                                    "type": "string",
+                                    "enum": [
+                                        "AVAILABLE",
+                                        "UNAVAILABLE"
+                                    ]
+                                },
+                                "price": {
+                                    "type": "object",
+                                    "required": [
+                                        "value",
+                                        "originalValue",
+                                        "currency"
+                                    ],
+                                    "properties": {
+                                        "value": {
+                                            "type": "number",
+                                            "format": "double"
+                                        },
+                                        "originalValue": {
+                                            "type": "number",
+                                            "format": "double"
+                                        },
+                                        "currency": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "maxPermitted": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "availabilities": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "id",
+                    "hours"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "startDate": {
+                        "type": "string"
+                    },
+                    "endDate": {
+                        "type": "string"
+                    },
+                    "hours": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "required": [
+                                "dayOfWeek",
+                                "timePeriods"
+                            ],
+                            "properties": {
+                                "dayOfWeek": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "enum": [
+                                            "MONDAY",
+                                            "TUESDAY",
+                                            "WEDNESDAY",
+                                            "THURSDAY",
+                                            "FRIDAY",
+                                            "SATURDAY",
+                                            "SUNDAY"
+                                        ]
+                                    }
+                                },
+                                "timePeriods": {
+                                    "type": "object",
+                                    "required": [
+                                        "startTime",
+                                        "endTime"
+                                    ],
+                                    "properties": {
+                                        "startTime": {
+                                            "type": "string",
+                                            "format": "time"
+                                        },
+                                        "endTime": {
+                                            "type": "string",
+                                            "format": "time"
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
         }
+    }
 },
   "request": {
     "type": null,
