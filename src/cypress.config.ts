@@ -1,13 +1,10 @@
-import { defineConfig } from "cypress";
+import { defineConfig } from 'cypress';
 
 export default defineConfig({
   e2e: {
-    setupNodeEvents(on, config) {
-
-    },
+    setupNodeEvents(on, config) {},
   },
   env: {
-    baseUrl: "https://programmersit.github.io/opendelivery-api-schema-validator/"
-  }
-
+    baseUrl: 'https://gui-camargo.github.io/opendelivery-api-schema-validator/',
+  },
 });
