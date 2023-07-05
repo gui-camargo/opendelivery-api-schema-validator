@@ -79,9 +79,8 @@ Available routes:
 ### Built With
 
 
-* [![React][React.js]][React-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![TypeScript][Typescriptlang.org]][Typescriptlang-url]
+[![Angular][Angular.io]][Angular-url]  
+[![TypeScript][Typescriptlang.org]][Typescriptlang-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
